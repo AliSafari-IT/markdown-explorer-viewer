@@ -38,7 +38,9 @@ function App() {
         
         if (isProduction) {
           // In production, use the pre-generated static JSON file
-          const response = await fetch("/md-data/folder-structure.json");
+          // Use window.location.pathname as base for GitHub Pages
+          const basePath = window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/';
+          const response = await fetch(`${basePath}md-data/folder-structure.json`);
           data = await response.json();
         } else {
           // In development, use the local server

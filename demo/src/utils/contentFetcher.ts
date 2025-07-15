@@ -31,7 +31,9 @@ async function fetchWithFallbacks(baseUrl: string, filePath: string): Promise<st
       const normalizedPath = filePath.startsWith('/') ? filePath.substring(1) : filePath;
       
       // Try to fetch from the static JSON files
-      const staticUrl = `/md-data/content/${normalizedPath}.json`;
+      // Use window.location.pathname as base for GitHub Pages
+      const basePath = window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/';
+      const staticUrl = `${basePath}md-data/content/${normalizedPath}.json`;
       console.log(`Using static file: ${staticUrl}`);
       
       try {
@@ -46,7 +48,7 @@ async function fetchWithFallbacks(baseUrl: string, filePath: string): Promise<st
       }
       
       // Try direct content file as fallback
-      const directContentUrl = `/md-data/content/${normalizedPath}`;
+      const directContentUrl = `${basePath}md-data/content/${normalizedPath}`;
       console.log(`Trying direct content: ${directContentUrl}`);
       try {
         const directResponse = await fetch(directContentUrl);
