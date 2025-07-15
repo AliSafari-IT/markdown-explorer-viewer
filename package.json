@@ -63,9 +63,13 @@
     "tslib": "^2.8.1",
     "typescript": "^5.3.3"
   },
-  "homepage": "https://github.com/AliSafari-IT/asafarim-webapp/tree/main/packages/markdown-explorer-viewer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AliSafari-IT/markdown-explorer-viewer.git"
+  },
+  "homepage": "https://github.com/AliSafari-IT/markdown-explorer-viewer",
   "bugs": {
-    "url": "https://github.com/AliSafari-IT/asafarim-webapp/issues"
+    "url": "https://github.com/AliSafari-IT/markdown-explorer-viewer/issues"
   },
   "publishConfig": {
     "access": "public"
