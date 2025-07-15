@@ -16,11 +16,12 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
+    "start:server": "cd md-server && pnpm run dev",
     "demo:build": "pnpm run build && cd demo && pnpm run build",
     "all": "pnpm i && pnpm run build",
     "prepare": "npm run build",
     "clean": "rimraf dist && cd md-server && rimraf dist && cd ..",
-    "demo": "concurrently \"pnpm run demo:build && cd demo && pnpm run dev\" \"cd md-server && pnpm run dev\"",
+    "demo": "concurrently \"pnpm run demo:build && cd demo && pnpm run dev\" \"pnpm run start:server\"",
     "prepublishOnly": "pnpm run clean && pnpm run build"
   },
   "keywords": [
