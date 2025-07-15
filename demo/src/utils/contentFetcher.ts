@@ -11,36 +11,25 @@
  */
 export async function fetchMarkdownContent(filePath: string): Promise<string> {
   try {
-    // Normalize path to ensure it has .md extension for fetching
-    const fetchPath = ensureMdExtension(filePath);
+    // Build the API URL for fetching content
+    const apiUrl = `http://localhost:3011/api/docs${filePath}`;
     
-    // Fetch the content
-    const response = await fetch(fetchPath);
+    console.log(`Fetching content from: ${apiUrl}`);
+    
+    // Fetch the content from the API
+    const response = await fetch(apiUrl);
     
     if (!response.ok) {
       throw new Error(`Failed to fetch markdown content: ${response.status} ${response.statusText}`);
     }
     
-    return await response.text();
+    // Parse the JSON response and extract content
+    const data = await response.json();
+    return data.content || '';
   } catch (error) {
     console.error('Error fetching markdown content:', error);
-    return `# Error Loading Content\n\nFailed to load content for: ${filePath}\n\n${error}`;
+    return `# Error Loading Content\n\nFailed to load content for: ${filePath}\n\nError: ${error}`;
   }
 }
 
-/**
- * Ensure a path has .md extension for fetching
- * @param path Path to normalize
- * @returns Path with .md extension
- */
-function ensureMdExtension(path: string): string {
-  // Remove leading slash for relative paths
-  const normalizedPath = path.startsWith('/') ? path.substring(1) : path;
-  
-  // Add .md extension if not present
-  if (!normalizedPath.endsWith('.md')) {
-    return `${normalizedPath}.md`;
-  }
-  
-  return normalizedPath;
-}
+
