@@ -31,6 +31,20 @@ function App() {
     const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
     const baseUrl = isProduction ? '' : 'http://localhost:3011';
     
+    // Get the base path for static files in GitHub Pages
+    const getBasePath = () => {
+      if (!isProduction) return '/';
+      
+      // Extract the repository name from the pathname
+      const pathParts = window.location.pathname.split('/');
+      if (pathParts.length >= 2 && pathParts[1]) {
+        return `/${pathParts[1]}/`;
+      }
+      return '/';
+    };
+    
+    const basePath = getBasePath();
+    
     // Fetch file tree from API or static source
     const fetchFileTree = async () => {
       try {
@@ -38,8 +52,7 @@ function App() {
         
         if (isProduction) {
           // In production, use the pre-generated static JSON file
-          // Use window.location.pathname as base for GitHub Pages
-          const basePath = window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/';
+          // Use the basePath variable defined earlier
           const response = await fetch(`${basePath}md-data/folder-structure.json`);
           data = await response.json();
         } else {

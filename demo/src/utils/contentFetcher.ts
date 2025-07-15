@@ -11,6 +11,21 @@ const isProduction = window.location.hostname !== 'localhost' && window.location
 const baseUrl = isProduction ? '' : 'http://localhost:3011';
 const useStaticFiles = isProduction;
 
+// Get the base path for static files in GitHub Pages
+// For GitHub Pages, this would be something like '/markdown-explorer-viewer'
+const getBasePath = () => {
+  if (!isProduction) return '/';
+  
+  // Extract the repository name from the pathname
+  const pathParts = window.location.pathname.split('/');
+  if (pathParts.length >= 2 && pathParts[1]) {
+    return `/${pathParts[1]}/`;
+  }
+  return '/';
+};
+
+const basePath = getBasePath();
+
 /**
  * Fetch markdown content from a file path
  * @param filePath Path to the markdown file
@@ -31,8 +46,7 @@ async function fetchWithFallbacks(baseUrl: string, filePath: string): Promise<st
       const normalizedPath = filePath.startsWith('/') ? filePath.substring(1) : filePath;
       
       // Try to fetch from the static JSON files
-      // Use window.location.pathname as base for GitHub Pages
-      const basePath = window.location.pathname.endsWith('/') ? window.location.pathname : window.location.pathname + '/';
+      // Use the basePath variable defined earlier
       const staticUrl = `${basePath}md-data/content/${normalizedPath}.json`;
       console.log(`Using static file: ${staticUrl}`);
       
@@ -47,7 +61,7 @@ async function fetchWithFallbacks(baseUrl: string, filePath: string): Promise<st
         // Fall through to try direct content
       }
       
-      // Try direct content file as fallback
+      // Try direct content file as fallback using the basePath variable
       const directContentUrl = `${basePath}md-data/content/${normalizedPath}`;
       console.log(`Trying direct content: ${directContentUrl}`);
       try {

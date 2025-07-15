@@ -110,16 +110,19 @@ async function exportStaticData() {
       const outputFilePath = path.join(OUTPUT_DIR, "content", relativePath);
       await ensureDirectoryExists(path.dirname(outputFilePath));
       
+      // Write the raw markdown content
       await fs.writeFile(
         outputFilePath,
         content
       );
+      console.log(`Exported raw content: ${relativePath}`);
       
       // Also create a JSON version with metadata
       await fs.writeFile(
         `${outputFilePath}.json`,
         JSON.stringify({ content }, null, 2)
       );
+      console.log(`Exported JSON content: ${relativePath}.json`);
     }
     
     console.log("Exported all markdown content");

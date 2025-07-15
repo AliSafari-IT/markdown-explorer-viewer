@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
       react(),
       markdownUrlPlugin()
     ],
-    base: '/markdown-explorer-viewer',  // Match the path in the built HTML file
+    base: '/markdown-explorer-viewer/',  // Match the path in the built HTML file with trailing slash
     server: {
       port: 3004,
       open: true,
