@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node load-md-files.js",
+    "export-static": "node export-static-data.js",
     "dev": "node --watch load-md-files.js",
     "predev": "npx kill-port 3011",
     "all": "pnpm i"

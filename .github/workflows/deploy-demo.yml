@@ -41,6 +41,9 @@ jobs:
       - name: Build library
         run: pnpm build
 
+      - name: Generate static markdown data
+        run: cd md-server && pnpm install && pnpm run export-static
+
       - name: Build demo
         run: cd demo && pnpm build
 

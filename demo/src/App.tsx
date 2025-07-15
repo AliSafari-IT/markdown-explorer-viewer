@@ -27,14 +27,25 @@ function App() {
   }, [theme]);
 
   useEffect(() => {
-    // Simulate fetching file tree from an API or static source
+    // Check if we're running in production/GitHub Pages environment
+    const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+    const baseUrl = isProduction ? '' : 'http://localhost:3011';
+    
+    // Fetch file tree from API or static source
     const fetchFileTree = async () => {
       try {
-        // Fetch the file tree from the API
-        const response = await fetch(
-          "http://localhost:3011/api/folder-structure"
-        );
-        const data = await response.json();
+        let data;
+        
+        if (isProduction) {
+          // In production, use the pre-generated static JSON file
+          const response = await fetch("/md-data/folder-structure.json");
+          data = await response.json();
+        } else {
+          // In development, use the local server
+          const response = await fetch(`${baseUrl}/api/folder-structure`);
+          data = await response.json();
+        }
+        
         setFileTree(data);
         setLoading(false);
         console.log("File tree loaded:", data);
