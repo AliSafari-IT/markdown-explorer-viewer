@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Markdown Explorer Viewer Demo</title>
+    <script type="module" crossorigin src="/markdown-explorer-viewer/assets/index-edacb9d3.js"></script>
+    <link rel="stylesheet" href="/markdown-explorer-viewer/assets/index-74f3bbd3.css">
+  <script>
+          // Handle direct navigation to markdown files
+          (function() {
+            // Check if we're on a direct navigation to a markdown file
+            const path = window.location.pathname;
+            if (path.endsWith('.md') || path.includes('/docs/') || path.includes('/api/') || path.includes('/examples/')) {
+              console.log('Direct navigation to:', path);
+              // Store the original path for the app to use
+              window.__ORIGINAL_PATH__ = path;
+            }
+          })();
+        </script>
+        </head>
+  <body>
+    <div id="root"></div>
+    
+  </body>
+</html>
